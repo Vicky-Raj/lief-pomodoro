@@ -10,6 +10,7 @@ import {
   DateInput,
   Form,
   Collapsible,
+  Spinner,
 } from "grommet";
 import { use, useContext, useEffect, useRef, useState } from "react";
 import TasksHeader, { GET_TASKS_META } from "@/components/TasksHeader";
@@ -110,6 +111,10 @@ const Tasks = () => {
   const [isEdit, setisEdit] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const currentTask = useRef<number>(0);
+  const { refetch, data: tasks } = useQuery<TasksQuery>(GET_TASKS, {
+    fetchPolicy: "network-only",
+    variables: { sort: sort, show: show, order: order },
+  });
   const [addTask] = useMutation(ADD_TASK, {
     refetchQueries: [
       { query: GET_TASKS, variables: { sort: sort, show: show, order: order } },
@@ -128,9 +133,7 @@ const Tasks = () => {
       { query: GET_TASKS_META },
     ],
   });
-  const { refetch, data: tasks } = useQuery<TasksQuery>(GET_TASKS, {
-    variables: { sort: sort, show: show, order: order },
-  });
+
   function closeModalupd() {
     setisEdit(false);
     setIsOpenupd(false);
@@ -197,8 +200,8 @@ const Tasks = () => {
   }
 
   useEffect(() => {
-    refetch({ sort: show, show: show, order: order });
-  }, [order, show, sort]);
+    refetch({ sort: sort, show: show, order: order });
+  }, [sort, show, order]);
 
   return (
     <Main>
@@ -257,7 +260,7 @@ const Tasks = () => {
           />
         </Collapsible>
         <Button color="brand" label="ADD TASK" primary onClick={openModalnew} />
-        {tasks &&
+        {tasks ? (
           tasks.getTasks.map((task: Task, i: number) => (
             <TaskCard
               task={task}
@@ -266,7 +269,12 @@ const Tasks = () => {
               onDelete={onDelete}
               onComplete={() => startPomo(task.id as number)}
             />
-          ))}
+          ))
+        ) : (
+          <Box justify="center" direction="row">
+            <Spinner />
+          </Box>
+        )}
         <TaskModal isOpen={updmodalIsOpen} onClose={closeModalupd}>
           {isEdit ? (
             <TaskForm
