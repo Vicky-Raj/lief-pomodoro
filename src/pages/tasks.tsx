@@ -11,7 +11,7 @@ import {
   Form,
   Collapsible,
 } from "grommet";
-import { use, useContext, useRef, useState } from "react";
+import { use, useContext, useEffect, useRef, useState } from "react";
 import TasksHeader, { GET_TASKS_META } from "@/components/TasksHeader";
 import TaskForm from "@/components/TaskForm";
 import TaskInfo from "@/components/TaskInfo";
@@ -196,6 +196,10 @@ const Tasks = () => {
     });
   }
 
+  useEffect(() => {
+    refetch({ sort: show, show: show, order: order });
+  }, [order, show, sort]);
+
   return (
     <Main>
       <TasksHeader />
@@ -226,7 +230,6 @@ const Tasks = () => {
             value={show}
             onChange={({ value }) => {
               setShow(value as string);
-              refetch({ sort: sort, show: value as string, order: order });
               filter.current.show = value as string;
             }}
           />
@@ -238,7 +241,6 @@ const Tasks = () => {
             value={sort}
             onChange={({ value }) => {
               setSort(value as string);
-              refetch({ sort: value as string, show: show, order: order });
               filter.current.sort = value as string;
             }}
           />
@@ -250,7 +252,6 @@ const Tasks = () => {
             value={order}
             onChange={({ value }) => {
               setOrder(value as string);
-              refetch({ sort: show, show: show, order: value as string });
               filter.current.order = value as string;
             }}
           />
