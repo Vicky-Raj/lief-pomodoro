@@ -377,7 +377,7 @@ export class DayResolver {
       where: {
         userId: user.id,
         date: {
-          lte: dayjs().startOf("day").toDate(),
+          lte: dayjs().add(1,"day").startOf("day").toDate(),
           gte: dayjs().subtract(7, "day").startOf("day").toDate(),
         },
       },
