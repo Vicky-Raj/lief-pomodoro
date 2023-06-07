@@ -122,7 +122,10 @@ export class TaskResolver {
     await prisma.day.updateMany({
       where: {
         userId: user.id,
-        date: dayjs().startOf("day").toDate(),
+        date: {
+          lte: dayjs().endOf("day").toDate(),
+          gte: dayjs().startOf("day").toDate(),
+        },
       },
       data: {
         done: {
@@ -148,7 +151,10 @@ export class TaskResolver {
       await prisma.day.updateMany({
         where: {
           userId: user.id,
-          date: dayjs().startOf("day").toDate(),
+          date: {
+            lte: dayjs().endOf("day").toDate(),
+            gte: dayjs().startOf("day").toDate(),
+          },
         },
         data: {
           focusTime: {
@@ -187,7 +193,10 @@ export class TaskResolver {
     await prisma.day.updateMany({
       where: {
         userId: user.id,
-        date: dayjs().startOf("day").toDate(),
+        date: {
+          lte: dayjs().endOf("day").toDate(),
+          gte: dayjs().startOf("day").toDate(),
+        },
       },
       data: {
         done: {
