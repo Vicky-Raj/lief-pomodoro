@@ -366,7 +366,7 @@ export class DayResolver {
     today = await prisma.day.create({
       data: {
         userId: user.id,
-        date: dayjs().startOf("day").toDate(),
+        date: dayjs().toDate(),
       },
     });
     return today;
