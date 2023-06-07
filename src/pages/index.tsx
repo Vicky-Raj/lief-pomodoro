@@ -265,6 +265,7 @@ const PomodoroTimer = () => {
           onSkip={handleSkip}
           pomos={pomos}
         />
+        <Box style={{height:"200px"}}></Box>
         <Box
           style={{
             position: "fixed",

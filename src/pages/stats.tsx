@@ -53,7 +53,7 @@ const Stats = () => {
         .startOf("day");
       let flag = false;
       for (let j = 0; j < days.length; j++) {
-        if (dayjs(days[j].date).isSame(date)) {
+        if (dayjs(days[j].date).startOf("day").isSame(date)) {
           chartData.push({
             date: date.format("YYYY-MM-DD"),
             amount: days[j].tomatoes,
@@ -68,8 +68,8 @@ const Stats = () => {
     }
   }
   console.log(chartData);
-  console.log(today)
-  console.log(week)
+  console.log(week);
+  console.log(today);
   return (
     <Main>
       <StatsHeader />
