@@ -265,7 +265,7 @@ const Tasks = () => {
             <TaskCard
               task={task}
               onExpand={() => handleExpansion(i)}
-              key={i}
+              key={task.id}
               onDelete={onDelete}
               onComplete={() => startPomo(task.id as number)}
             />
