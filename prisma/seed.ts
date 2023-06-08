@@ -9,7 +9,11 @@ dayjs.extend(timezone);
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.day.deleteMany({});
+  await prisma.day.deleteMany({
+    where: {
+      id:17
+    }
+  });
 }
 
 main()
